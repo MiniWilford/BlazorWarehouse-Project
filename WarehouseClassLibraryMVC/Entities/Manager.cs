@@ -18,6 +18,5 @@ namespace WarehouseClassLibraryMVC.Entities
         public string LastName { get; set; }
         [MaxLength(50)]
         public string? Title { get; set; }
-        public virtual Schedule? Schedule { get; set; } = null;
     }
 }
