@@ -17,7 +17,6 @@ namespace WarehouseClassLibraryMVC.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Manager> Managers { get; set; }
-        public DbSet<Schedule> Schedules { get; set; }
 
 
         // Seeding Values in DB
