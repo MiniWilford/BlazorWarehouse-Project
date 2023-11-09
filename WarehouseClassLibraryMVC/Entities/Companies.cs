@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WarehouseClassLibraryMVC.Entities
 {
-    [Table("Comapnies")]
+    [Table("Companies")]
     public class Companies
     {
         public int CompanyId { get; set; }
