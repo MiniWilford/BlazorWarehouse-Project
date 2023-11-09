@@ -1,10 +1,12 @@
-﻿using System.ComponentModel;
+﻿using Castle.Components.DictionaryAdapter;
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WarehouseClassLibraryMVC.Entities
 {
-    [Table("Companies")]
-    public class Companies
+    [Table("Companys")]
+    public class Company
     {
         public int CompanyId { get; set; }
         [DisplayName("Company Name")]
