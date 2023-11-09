@@ -3,10 +3,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WarehouseClassLibraryMVC.Entities
 {
-    [Table("Customers")]
-    public class Customer
+    [Table("Comapnies")]
+    public class Companies
     {
-        public int CustomerId { get; set; }
+        public int CompanyId { get; set; }
         [DisplayName("First Name")]
         public string? FirstName { get; set; }
         [DisplayName("Last Name")]
