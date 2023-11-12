@@ -1,8 +1,46 @@
 ﻿@page "/"
 @page "/Index"
 
-<h1>Choose Company</h1>
+@inject HttpClient http
+
+@if(Companies is null)
+{
+    <div class="spinner-border m-5" role="status">
+    </div>
+}
+else
+{
+    <h1>Choose Company</h1>
+
+    <form>
+        <div class="form-group m-2 w-25">
+            <label class="control-label">Company: </label>
+            <select class="form-control" @bind="CompanyId">
+                <option value="">Select a company...</option>
+                @foreach (var company in Companies)
+                {
+                    <option value="@company.CompanyId">@company.CompanyName</option>
+                }
+            </select>
+        </div>
+    </form>
+}
+
 
 @code {
+    public string? CompanyId { get; set; }
 
+    public List<CompaniesViewModel>? Companies { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            Companies = await http.GetFromJsonAsync<List<CompaniesViewModel>>("api/Companies");
+        } catch (Exception e)
+        {
+        }
+
+        await base.OnInitializedAsync();
+    }
 }

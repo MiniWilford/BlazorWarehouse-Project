@@ -19,8 +19,7 @@ namespace WarehouseWebAPI
 
             builder.Services.AddControllers();
 
-            /*
-            // TODO: CORS requirements, implement later
+
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("CorsAllowAll",
@@ -30,11 +29,13 @@ namespace WarehouseWebAPI
                     });
             });
 
-            */
+           
 
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
+
+            app.UseCors("CorsAllowAll");
 
             app.UseHttpsRedirection();
 

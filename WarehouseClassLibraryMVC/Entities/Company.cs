@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WarehouseClassLibraryMVC.Entities
 {
-    [Table("Companys")]
+    [Table("Companies")]
     public class Company
     {
         public int CompanyId { get; set; }
