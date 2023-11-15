@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <Content Remove="Pages\Companies.razor" />
+    <Content Remove="Pages\CompanyOrder.razor" />
   </ItemGroup>
 
   <ItemGroup>
@@ -16,10 +17,12 @@
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="Pages\Companies.razor" />
+    <_ContentIncludedByDefault Remove="Pages\CompanyOrder.razor" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="Pages\Companies.razor" />
+    <None Include="Pages\CompanyOrder.razor" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,6 +32,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WarehouseModels\WarehouseModels.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\CompanyOrder.razor" />
   </ItemGroup>
 
 </Project>
