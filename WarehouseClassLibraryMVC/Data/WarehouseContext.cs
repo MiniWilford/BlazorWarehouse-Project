@@ -37,6 +37,10 @@ namespace WarehouseClassLibraryMVC.Data
                 new Manager { ManagerId = 2, FirstName = "Justin", LastName = "Smith", Title = "Assistant Manager" }
                 );
 
+            modelBuilder.Entity<Company>().HasData(
+                new Company { CompanyId = 1, CompanyName = "Rust Tools", Address = "123 Main St", City = "New York", State = "Maine", PostalCode = "1235"}
+                );
+
             //modelBuilder.Entity<Employee>().HasData(
             //  new Employee { EmployeeId = 1, FirstName = "KJ", LastName="DeJarnett",  }
             //);

@@ -1,0 +1,14 @@
+﻿@WarehouseWebAPI_HostAddress = https://localhost:7180
+
+GET {{WarehouseWebAPI_HostAddress}}/api/companies
+
+###
+
+POST {{WarehouseWebAPI_HostAddress}}/api/companies
+Content-Type: application/json
+
+{
+  //Company
+}
+
+###

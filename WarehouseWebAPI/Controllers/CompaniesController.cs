@@ -34,7 +34,7 @@ namespace WarehouseWebAPI.Controllers
 
           List<CompaniesViewModel> companyViewModels = new List<CompaniesViewModel>();
 
-          var companies = await _context.Companys.ToListAsync();
+          var companies = await _context.Companys.OrderBy(c => c.CompanyName).ToListAsync();
 
             foreach (var company in companies)
             {
@@ -50,7 +50,6 @@ namespace WarehouseWebAPI.Controllers
 
                 companyViewModels.Add(companyView);
             }
-
 
             return companyViewModels;
         }

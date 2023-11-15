@@ -23,20 +23,34 @@ else
                 }
             </select>
         </div>
+        <div class="form-group m-2">
+            <a class="btn btn-primary"
+               href="/CompanyOrder/@CompanyId"
+            @onclick="SetAllowNavigate"
+            @onclick:preventDefault="AllowNavigate">Go!</a>
+
+        </div>
     </form>
 }
 
 
 @code {
     public string? CompanyId { get; set; }
-
+    
     public List<CompaniesViewModel>? Companies { get; set; }
+
+    public bool AllowNavigate { get; set; } = false;
+
+    private void SetAllowNavigate()
+    {
+        AllowNavigate = string.IsNullOrWhiteSpace(CompanyId); // True if not null/whitespace
+    }
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
-            Companies = await http.GetFromJsonAsync<List<CompaniesViewModel>>("api/Companies");
+            Companies = await http.GetFromJsonAsync<List<CompaniesViewModel>>("api/companies");
         } catch (Exception e)
         {
         }
