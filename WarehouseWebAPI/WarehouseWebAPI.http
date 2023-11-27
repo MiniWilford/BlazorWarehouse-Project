@@ -12,3 +12,11 @@ Content-Type: application/json
 }
 
 ###
+
+GET {{WarehouseWebAPI_HostAddress}}/api/managers
+
+###
+
+GET {{WarehouseWebAPI_HostAddress}}/api/managers
+
+###

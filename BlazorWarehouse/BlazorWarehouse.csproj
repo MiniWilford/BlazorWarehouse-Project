@@ -31,11 +31,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WarehouseModels\WarehouseModels.csproj" />
+    <UpToDateCheckInput Remove="Pages\CompanyOrder.razor" />
   </ItemGroup>
 
   <ItemGroup>
-    <UpToDateCheckInput Remove="Pages\CompanyOrder.razor" />
+    <ProjectReference Include="..\WarehouseModels\WarehouseModels.csproj" />
   </ItemGroup>
 
 </Project>
