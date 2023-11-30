@@ -1,7 +1,7 @@
 ﻿@page "/Managers"
 @using WarehouseModels
 
-@inject HttpClient Http
+@inject HttpClient http
 
 <h3>Managers</h3>
 
@@ -17,6 +17,7 @@ else
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Title</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -26,6 +27,11 @@ else
                     <td>@manager.FirstName</td>
                     <td>@manager.LastName</td>
                     <td>@manager.Title</td>
+                    <td>
+                        <a href="@($"ManagerEdit/{manager.ManagerId}")">Edit</a> |
+                        <a href="@($"ManagerDetails/{manager.ManagerId}")">Details</a> |
+                        <a @onclick="@( () => DeleteManager(@manager.ManagerId))" @onclick:preventDefault="true" href="">Delete</a>
+                    </td>
                 </tr>
             }
         </tbody>
@@ -36,9 +42,16 @@ else
 @code {
     public List<Manager>? ManagerList { get; set; } = new List<Manager>();
 
+    private async void DeleteManager(int ManagerId)
+    {
+        var result = await http.DeleteAsync($"api/managers/{ManagerId}");
+        ManagerList = await http.GetFromJsonAsync<List<Manager>>("api/Managers");
+        StateHasChanged();
+    }
+
     protected override async Task OnInitializedAsync()
     {
-        ManagerList = await Http.GetFromJsonAsync<List<Manager>>("api/Managers");
+        ManagerList = await http.GetFromJsonAsync<List<Manager>>("api/Managers");
     }
 }
 

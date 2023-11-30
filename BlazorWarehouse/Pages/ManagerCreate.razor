@@ -1,0 +1,20 @@
+﻿@page "/ManagerCreate/{ManagerId:int?}"
+@using WarehouseModels
+
+@inject HttpClient http
+
+
+<h3>ManagerCreate</h3>
+
+@code {
+
+    [Parameter]
+    public int? ManagerId { get; set; }
+
+    public Manager? manager { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        
+    }
+}
