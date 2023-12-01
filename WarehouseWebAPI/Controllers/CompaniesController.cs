@@ -25,20 +25,20 @@ namespace WarehouseWebAPI.Controllers
 
         // GET: api/Companies
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CompaniesViewModel>>> GetCompanys()
+        public async Task<ActionResult<IEnumerable<CompanyViewModel>>> GetCompanys()
         {
           if (_context.Companys == null)
           {
               return NotFound();
           }
 
-          List<CompaniesViewModel> companyViewModels = new List<CompaniesViewModel>();
+          List<CompanyViewModel> companyList = new List<CompanyViewModel>();
 
           var companies = await _context.Companys.OrderBy(c => c.CompanyName).ToListAsync();
 
             foreach (var company in companies)
             {
-                var companyView = new CompaniesViewModel
+                var companyView = new CompanyViewModel
                 {
                     CompanyId = company.CompanyId,
                     CompanyName = company.CompanyName,
@@ -48,10 +48,10 @@ namespace WarehouseWebAPI.Controllers
                     PostalCode = company.PostalCode,
                 };
 
-                companyViewModels.Add(companyView);
+                companyList.Add(companyView);
             }
 
-            return companyViewModels;
+            return companyList;
         }
 
         // GET: api/Companies/5

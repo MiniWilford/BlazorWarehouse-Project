@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace WarehouseModels
 {
     
-    public class Manager
+    public class ManagerViewModel
     {
         public int ManagerId { get; set; }
         [MaxLength(50)]

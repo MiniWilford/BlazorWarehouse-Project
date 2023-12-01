@@ -40,18 +40,18 @@ else
 
 
 @code {
-    public List<Manager>? ManagerList { get; set; } = new List<Manager>();
+    public List<ManagerViewModel>? ManagerList { get; set; } = new List<ManagerViewModel>();
 
     private async void DeleteManager(int ManagerId)
     {
         var result = await http.DeleteAsync($"api/managers/{ManagerId}");
-        ManagerList = await http.GetFromJsonAsync<List<Manager>>("api/Managers");
+        ManagerList = await http.GetFromJsonAsync<List<ManagerViewModel>>("api/Managers");
         StateHasChanged();
     }
 
     protected override async Task OnInitializedAsync()
     {
-        ManagerList = await http.GetFromJsonAsync<List<Manager>>("api/Managers");
+        ManagerList = await http.GetFromJsonAsync<List<ManagerViewModel>>("api/Managers");
     }
 }
 

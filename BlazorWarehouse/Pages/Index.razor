@@ -37,7 +37,7 @@ else
 @code {
     public string? CompanyId { get; set; }
     
-    public List<CompaniesViewModel>? Companies { get; set; }
+    public List<CompanyViewModel>? Companies { get; set; }
 
     public bool AllowNavigate { get; set; } = false;
 
@@ -50,7 +50,7 @@ else
     {
         try
         {
-            Companies = await http.GetFromJsonAsync<List<CompaniesViewModel>>("api/companies");
+            Companies = await http.GetFromJsonAsync<List<CompanyViewModel>>("api/companies");
         } catch (Exception e)
         {
         }

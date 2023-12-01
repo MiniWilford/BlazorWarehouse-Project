@@ -1,7 +1,54 @@
 ﻿@page "/Employees"
+@using WarehouseModels
+
+@inject HttpClient http
 
 <h3>Employees</h3>
 
-@code {
+@if(EmployeeList == null) 
+{
+	<p>Loading...</p>
+} 
+else 
+{
+	<table class="table">
+		<thead>
+			<tr>
+				<th>First Name</th>
+				<th>Last Name</th>
+				<th>Managers</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var employee in EmployeeList) 
+			{
+				<tr>
+					<td>@employee.FirstName</td>
+					<td>@employee.LastName</td>
+					<td>@employee.Managers</td>
+					<td>
+						<a href="@($"EmployeeEdit/{employee.EmployeeId}")">Edit</a> |
+						<a href="@($"EmployeeDetails/{employee.EmployeeId}")">Details</a>
+						<a onclick="@( () => DeleteEmployee(employee.EmployeeId))" @onclick::preventDefault="true" href="">Delete</a>
+					</td>
+				</tr>			
+			}
+		</tbody>
+	</table>
+}
 
+@code {
+	public List<EmployeeViewModel>? EmployeeList { get; set; } = new List<EmployeeViewModel>();
+
+	private async void DeleteEmployee(int EmployeeId) 
+	{
+		var result = await http.DeleteAsync($"api/managers/{EmployeeId}");
+		EmployeeList = await http.GetFromJsonAsync<List<EmployeeViewModel>>("api/Employees");
+		StateHasChanged();
+	}
+
+	protected override async Task OnInitializedAsync() 
+	{
+		EmployeeList = await http.GetFromJsonAsync<List<EmployeeViewModel>>("api/Employees");
+	}
 }

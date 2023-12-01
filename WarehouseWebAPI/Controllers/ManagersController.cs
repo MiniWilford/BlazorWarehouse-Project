@@ -30,7 +30,7 @@ namespace WarehouseWebAPI.Controllers
               return NotFound();
           }
           List<Manager> managerList = new List<Manager>();
-            var managers = await _context.Managers.ToListAsync();
+            var managers = await _context.Managers.OrderBy(m => m.LastName).ToListAsync();
             
             foreach (var manager in managers) 
             {
