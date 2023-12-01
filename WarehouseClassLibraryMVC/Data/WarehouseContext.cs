@@ -11,7 +11,7 @@ namespace WarehouseClassLibraryMVC.Data
         }
 
         //Dbsets
-        public DbSet<Company> Companys { get; set; }
+        public DbSet<Company> Companies { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Product> Products { get; set; }

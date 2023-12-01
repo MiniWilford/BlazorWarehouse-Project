@@ -7,21 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Pages\Companies.razor" />
     <Content Remove="Pages\CompanyOrder.razor" />
   </ItemGroup>
 
   <ItemGroup>
-    <UpToDateCheckInput Remove="Pages\Companies.razor" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="Pages\Companies.razor" />
     <_ContentIncludedByDefault Remove="Pages\CompanyOrder.razor" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Pages\Companies.razor" />
     <None Include="Pages\CompanyOrder.razor" />
   </ItemGroup>
 
@@ -29,6 +22,11 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.11">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.11" />
   </ItemGroup>
 
   <ItemGroup>

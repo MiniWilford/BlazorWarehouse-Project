@@ -1,7 +1,52 @@
 ﻿@page "/Orders"
+@using WarehouseModels
+
+@inject HttpClient http
 
 <h3>Orders</h3>
 
-@code {
+@if(OrderList == null) 
+{
+	<p>Loading...</p>
+}
+else 
+{
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Order Date</th>
+				<th>Company ID</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach(var order in OrderList) {
+				<tr>
+					<td>@order.OrderDate</td>
+					<td>@order.CompanyId</td>
+					<td>
+						<a href="@($"OrderEdit/{order.OrderId}")">Edit</a>
+						<a href="@($"OrderDetails/{order.OrderId}")">Details</a>
+						<a @onclick="@( () => DeleteOrder(order.OrderId))" @onclick:preventDefault="true" href="">Delete</a>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>	
+}
 
+
+@code {
+	public List<OrderViewModel>? OrderList { get; set; } = new List<OrderViewModel>();
+
+	private async void DeleteOrder(int OrderId) 
+	{
+		var result = await http.DeleteAsync($"api/orders/{OrderId}");
+		OrderList = await http.GetFromJsonAsync<List<OrderViewModel>>("api/Orders");
+		StateHasChanged();
+	}
+
+	protected override async Task OnInitializedAsync() 
+	{
+		OrderList = await http.GetFromJsonAsync<List<OrderViewModel>>("api/Orders");
+	}
 }

@@ -30,7 +30,7 @@ else
                     <td>
                         <a href="@($"ManagerEdit/{manager.ManagerId}")">Edit</a> |
                         <a href="@($"ManagerDetails/{manager.ManagerId}")">Details</a> |
-                        <a @onclick="@( () => DeleteManager(@manager.ManagerId))" @onclick:preventDefault="true" href="">Delete</a>
+                        <a @onclick="@( () => DeleteManager(manager.ManagerId))" @onclick:preventDefault="true" href="">Delete</a>
                     </td>
                 </tr>
             }

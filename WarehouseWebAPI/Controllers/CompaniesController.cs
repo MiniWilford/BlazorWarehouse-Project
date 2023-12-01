@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WarehouseClassLibraryMVC.Data;
 using WarehouseClassLibraryMVC.Entities;
-using WarehouseModels;
 
 namespace WarehouseWebAPI.Controllers
 {
@@ -25,27 +23,25 @@ namespace WarehouseWebAPI.Controllers
 
         // GET: api/Companies
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CompanyViewModel>>> GetCompanys()
+        public async Task<ActionResult<IEnumerable<Company>>> GetCompanies()
         {
-          if (_context.Companys == null)
+          if (_context.Companies == null)
           {
               return NotFound();
           }
+            List<Company> companyList = new List<Company>();
+            var companies = await _context.Companies.OrderBy(c => c.CompanyName).ToListAsync();
 
-          List<CompanyViewModel> companyList = new List<CompanyViewModel>();
-
-          var companies = await _context.Companys.OrderBy(c => c.CompanyName).ToListAsync();
-
-            foreach (var company in companies)
-            {
-                var companyView = new CompanyViewModel
+            foreach(var company in companies) 
+                {
+                var companyView = new Company 
                 {
                     CompanyId = company.CompanyId,
                     CompanyName = company.CompanyName,
                     Address = company.Address,
                     City = company.City,
                     State = company.State,
-                    PostalCode = company.PostalCode,
+                    PostalCode = company.PostalCode
                 };
 
                 companyList.Add(companyView);
@@ -58,11 +54,11 @@ namespace WarehouseWebAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Company>> GetCompany(int id)
         {
-          if (_context.Companys == null)
+          if (_context.Companies == null)
           {
               return NotFound();
           }
-            var company = await _context.Companys.FindAsync(id);
+            var company = await _context.Companies.FindAsync(id);
 
             if (company == null)
             {
@@ -108,11 +104,11 @@ namespace WarehouseWebAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<Company>> PostCompany(Company company)
         {
-          if (_context.Companys == null)
+          if (_context.Companies == null)
           {
               return Problem("Entity set 'WarehouseContext.Companys'  is null.");
           }
-            _context.Companys.Add(company);
+            _context.Companies.Add(company);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetCompany", new { id = company.CompanyId }, company);
@@ -122,17 +118,17 @@ namespace WarehouseWebAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCompany(int id)
         {
-            if (_context.Companys == null)
+            if (_context.Companies == null)
             {
                 return NotFound();
             }
-            var company = await _context.Companys.FindAsync(id);
+            var company = await _context.Companies.FindAsync(id);
             if (company == null)
             {
                 return NotFound();
             }
 
-            _context.Companys.Remove(company);
+            _context.Companies.Remove(company);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -140,7 +136,7 @@ namespace WarehouseWebAPI.Controllers
 
         private bool CompanyExists(int id)
         {
-            return (_context.Companys?.Any(e => e.CompanyId == id)).GetValueOrDefault();
+            return (_context.Companies?.Any(e => e.CompanyId == id)).GetValueOrDefault();
         }
     }
 }
