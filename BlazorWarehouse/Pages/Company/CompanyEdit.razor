@@ -1,0 +1,76 @@
+﻿@page "/CompanyEdit/{CompanyId:int?}"
+@using WarehouseModels
+@using Microsoft.AspNetCore.Components.Forms
+
+@inject HttpClient http
+@inject NavigationManager nav
+
+
+
+<h3>CompanyEdit</h3>
+
+@if (Company is null)
+{
+    <p>Loading Company...</p>
+}
+else
+{
+    <div class="container">
+        <div class="row">
+            <EditForm Model="@Company" OnSubmit="@HandleSubmit">
+                <div class="form-floating my-2">
+                    <InputText id="CompanyName" name="CompanyName" @bind-Value="Company.CompanyName" class="form-control" placeholder="x" />
+                    <label for="CompanyName">Company Name:</label>
+                </div>
+                <div class="form-floating my-2">
+                    <InputText id="Address" name="Address" @bind-Value="Company.Address" class="form-control" placeholder="x" />
+                    <label for="Address">Address:</label>
+                </div>
+                <div class="form-floating my-2">
+                    <InputText id="City" name="City" @bind-Value="Company.City" class="form-control" placeholder="x" />
+                    <label for="City">City:</label>
+                </div>
+                <div class="form-floating my-2">
+                    <InputText id="State" name="State" @bind-Value="Company.State" class="form-control" placeholder="x" />
+                    <label for="State">State:</label>
+                </div>
+                <div class="form-floating my-2">
+                    <InputText id="PostalCode" name="PostalCode" @bind-Value="Company.PostalCode" class="form-control" placeholder="x" />
+                    <label for="PostalCode">Postal Code:</label>
+                </div>
+                <div class="form-floating my-2">
+                    <button class="btn btn-primary" type="submit">Edit</button>
+                </div>
+            </EditForm>
+        </div>
+        <div class="row">
+            <div class="my-1">
+                <a href="Companies">Back to List</a>
+            </div>
+
+        </div>
+
+    </div>
+}
+
+@code {
+    [Parameter]
+    public int? CompanyId { get; set; }
+
+    public CompanyViewModel? Company { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Company = await http.GetFromJsonAsync<CompanyViewModel>($"api/Companies/{CompanyId}");
+
+        await base.OnInitializedAsync();
+    }
+
+    protected async void HandleSubmit()
+    {
+        var result = await http.PutAsJsonAsync<CompanyViewModel>($"api/Companies/{CompanyId}", Company!);
+
+        //redirect to companies list on submit
+        nav.NavigateTo("/Companies");
+    }
+}

@@ -1,0 +1,59 @@
+﻿@page "/Companies"
+@using WarehouseModels
+
+@inject HttpClient http
+
+<h3>Companies</h3>
+<p>
+    <a href="CompanyCreate">Create New</a>
+</p>
+@if (CompanyList == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>City</th>
+                <th>State</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var company in CompanyList)
+            {
+                <tr>
+                    <td>@company.CompanyName</td>
+                    <td>@company.City</td>
+                    <td>@company.State</td>
+                    <td>
+                        <a href="@($"CompanyEdit/{company.CompanyId}")">Edit</a> |
+                        <a href="@($"CompanyDetails/{company.CompanyId}")">Details</a> |
+                        <a @onclick="@( () => DeleteCompany(company.CompanyId))" @onclick:preventDefault="true" href="">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+@code {
+    public List<CompanyViewModel>? CompanyList { get; set; } = new List<CompanyViewModel>();
+
+    private async void DeleteCompany(int CompanyId)
+    {
+        var result = await http.DeleteAsync($"api/companies/{CompanyId}");
+        CompanyList = await http.GetFromJsonAsync<List<CompanyViewModel>>("api/companies");
+        StateHasChanged();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        CompanyList = await http.GetFromJsonAsync<List<CompanyViewModel>>("api/companies");
+    }
+}
+
