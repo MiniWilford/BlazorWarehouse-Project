@@ -1,0 +1,53 @@
+﻿@page "/ManagerCreate"
+@using Microsoft.AspNetCore.Components.Forms
+@using WarehouseModels
+
+@inject HttpClient http
+@inject NavigationManager nav
+
+
+<h3>Create Manager</h3>
+
+
+<div class="container" >
+    <div class="row">
+        <EditForm Model="@Manager" OnSubmit="@HandleSubmit">
+            <div class="form-floating my-2">
+                <InputText id="FirstName" name="FirstName" @bind-Value="Manager.FirstName" class="form-control" placeholder="x" />
+                <label for="FirstName">First Name:</label>
+            </div>
+            <div class="form-floating my-2">
+                <InputText id="LastName" name="LastName" @bind-Value="Manager.LastName" class="form-control" placeholder="x" />
+                <label for="LastName">Last Name:</label>
+            </div>
+            <div class="form-floating my-2">
+                <InputText id="Title" name="Title" @bind-Value="Manager.Title" class="form-control" placeholder="x" />
+                <label for="Title">Title:</label>
+            </div>
+
+            <div class="form-floating my-2">
+
+                <button class="btn btn-primary" type="submit">Create</button>
+            </div>
+        </EditForm>
+    </div>
+    <div class="row">
+        <div class="my-1">
+            <a href="Managers">Back to List</a>
+        </div>
+    </div>
+</div>
+
+@code {
+
+
+    public ManagerViewModel Manager { get; set; } = new ManagerViewModel();
+
+    protected async void HandleSubmit()
+    {
+        var result = await http.PostAsJsonAsync<ManagerViewModel>($"api/Managers", Manager!);
+
+        //redirect to managers list on submit
+        nav.NavigateTo("/Managers");
+    }
+}

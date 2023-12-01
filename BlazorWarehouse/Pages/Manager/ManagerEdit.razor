@@ -1,0 +1,67 @@
+﻿@page "/ManagerEdit/{ManagerId:int?}"
+@using WarehouseModels
+@using Microsoft.AspNetCore.Components.Forms
+
+@inject HttpClient http
+@inject NavigationManager nav
+
+
+
+<h3>ManagerEdit</h3>
+
+@if(Manager is null)
+{
+    <p>Loading Manager...</p>
+} else
+{
+    <div class="container" >
+        <div class="row">
+            <EditForm Model="@Manager" OnSubmit="@HandleSubmit">
+                <div class="form-floating my-2">
+                    <InputText id="FirstName" name="FirstName" @bind-Value="Manager.FirstName" class="form-control" placeholder="x" />
+                    <label for="FirstName">First Name:</label>
+                </div>
+                <div class="form-floating my-2">
+                    <InputText id="LastName" name="LastName" @bind-Value="Manager.LastName" class="form-control" placeholder="x" />
+                    <label for="LastName">Last Name:</label>
+                </div>
+                <div class="form-floating my-2">
+                    <InputText id="Title" name="Title" @bind-Value="Manager.Title" class="form-control" placeholder="x" />
+                    <label for="Title">Title:</label>
+                </div>
+                <div class="form-floating my-2">
+                    <button class="btn btn-primary" type="submit">Edit</button>
+                </div>
+            </EditForm>
+        </div>
+        <div class="row">
+            <div class="my-1">
+                <a href="Managers">Back to List</a>
+            </div>
+            
+        </div>
+        
+    </div>
+}
+
+@code {
+    [Parameter]
+    public int? ManagerId { get; set; }
+
+    public ManagerViewModel? Manager { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Manager = await http.GetFromJsonAsync<ManagerViewModel>($"api/Managers/{ManagerId}");
+
+        await base.OnInitializedAsync();
+    }
+
+    protected async void HandleSubmit()
+    {
+        var result = await http.PutAsJsonAsync<ManagerViewModel>($"api/Managers/{ManagerId}", Manager!);
+
+        //redirect to managers list on submit
+        nav.NavigateTo("/Managers");
+    }
+}
