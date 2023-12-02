@@ -16,6 +16,8 @@ namespace WarehouseClassLibraryMVC.Entities
         public string FirstName { get; set; }
         [MaxLength(50)]
         public string LastName { get; set; }
-        public virtual ICollection<Manager> Managers { get; set; } = new List<Manager>();
+
+        public int ManagerId { get; set; }
+        public virtual Manager? Manager { get; set; } = null;
     }
 }

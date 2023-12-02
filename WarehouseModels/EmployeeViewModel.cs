@@ -14,6 +14,8 @@ namespace WarehouseModels
 		public string FirstName { get; set; }
 		[MaxLength(50)]
 		public string LastName { get; set; }
-		public virtual ICollection<ManagerViewModel> Managers { get; set; } = new List<ManagerViewModel>();
+
+        public int ManagerId { get; set; }
+        public virtual ManagerViewModel Manager { get; set; } = null;
 	}
 }

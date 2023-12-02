@@ -5,6 +5,9 @@
 
 <h3>Employees</h3>
 
+<p>
+	<a href="EmployeeCreate">Create New</a>
+</p>
 @if(EmployeeList == null) 
 {
 	<p>Loading...</p>
@@ -25,7 +28,7 @@ else
 				<tr>
 					<td>@employee.FirstName</td>
 					<td>@employee.LastName</td>
-					<td>@employee.Managers</td>
+					<td>@employee.ManagerId</td>
 					<td>
 						<a href="@($"EmployeeEdit/{employee.EmployeeId}")">Edit</a> |
 						<a href="@($"EmployeeDetails/{employee.EmployeeId}")">Details</a>

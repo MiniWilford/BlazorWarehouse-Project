@@ -38,7 +38,8 @@ namespace WarehouseWebAPI.Controllers
                     EmployeeId = employee.EmployeeId,
                     FirstName = employee.FirstName,
                     LastName = employee.LastName,
-                    Managers = employee.Managers
+                    ManagerId = employee.ManagerId,
+                    Manager = employee.Manager
                 };
 
                 employeeList.Add(employeeView);
