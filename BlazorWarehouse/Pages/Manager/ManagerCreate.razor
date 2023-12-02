@@ -13,15 +13,15 @@
     <div class="row">
         <EditForm Model="@Manager" OnSubmit="@HandleSubmit">
             <div class="form-floating my-2">
-                <InputText id="FirstName" name="FirstName" @bind-Value="Manager.FirstName" class="form-control" placeholder="x" />
+                <InputText id="FirstName" name="FirstName" @bind-Value="Manager.FirstName" class="form-control" placeholder="x" required />
                 <label for="FirstName">First Name:</label>
             </div>
             <div class="form-floating my-2">
-                <InputText id="LastName" name="LastName" @bind-Value="Manager.LastName" class="form-control" placeholder="x" />
+                <InputText id="LastName" name="LastName" @bind-Value="Manager.LastName" class="form-control" placeholder="x" required />
                 <label for="LastName">Last Name:</label>
             </div>
             <div class="form-floating my-2">
-                <InputText id="Title" name="Title" @bind-Value="Manager.Title" class="form-control" placeholder="x" />
+                <InputText id="Title" name="Title" @bind-Value="Manager.Title" class="form-control" placeholder="x" required />
                 <label for="Title">Title:</label>
             </div>
 

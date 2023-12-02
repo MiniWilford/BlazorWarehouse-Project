@@ -19,23 +19,23 @@ else
         <div class="row">
             <EditForm Model="@Company" OnSubmit="@HandleSubmit">
                 <div class="form-floating my-2">
-                    <InputText id="CompanyName" name="CompanyName" @bind-Value="Company.CompanyName" class="form-control" placeholder="x" />
+                    <InputText id="CompanyName" name="CompanyName" @bind-Value="Company.CompanyName" class="form-control" placeholder="x" required />
                     <label for="CompanyName">Company Name:</label>
                 </div>
                 <div class="form-floating my-2">
-                    <InputText id="Address" name="Address" @bind-Value="Company.Address" class="form-control" placeholder="x" />
+                    <InputText id="Address" name="Address" @bind-Value="Company.Address" class="form-control" placeholder="x" required />
                     <label for="Address">Address:</label>
                 </div>
                 <div class="form-floating my-2">
-                    <InputText id="City" name="City" @bind-Value="Company.City" class="form-control" placeholder="x" />
+                    <InputText id="City" name="City" @bind-Value="Company.City" class="form-control" placeholder="x" required />
                     <label for="City">City:</label>
                 </div>
                 <div class="form-floating my-2">
-                    <InputText id="State" name="State" @bind-Value="Company.State" class="form-control" placeholder="x" />
+                    <InputText id="State" name="State" @bind-Value="Company.State" class="form-control" placeholder="x" required />
                     <label for="State">State:</label>
                 </div>
                 <div class="form-floating my-2">
-                    <InputText id="PostalCode" name="PostalCode" @bind-Value="Company.PostalCode" class="form-control" placeholder="x" />
+                    <InputText id="PostalCode" name="PostalCode" @bind-Value="Company.PostalCode" class="form-control" placeholder="x" required />
                     <label for="PostalCode">Postal Code:</label>
                 </div>
                 <div class="form-floating my-2">

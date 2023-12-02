@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WarehouseClassLibraryMVC.Data;
 using WarehouseClassLibraryMVC.Entities;
+using WarehouseModels;
 
 namespace WarehouseWebAPI.Controllers
 {
@@ -23,18 +24,18 @@ namespace WarehouseWebAPI.Controllers
 
         // GET: api/Managers
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Manager>>> GetManagers()
+        public async Task<ActionResult<IEnumerable<ManagerViewModel>>> GetManagers()
         {
           if (_context.Managers == null)
           {
               return NotFound();
           }
-          List<Manager> managerList = new List<Manager>();
+          List<ManagerViewModel> managerList = new List<ManagerViewModel>();
             var managers = await _context.Managers.OrderBy(m => m.LastName).ToListAsync();
             
             foreach (var manager in managers) 
             {
-                var managerView = new Manager
+                var managerView = new ManagerViewModel
                 {
                     ManagerId = manager.ManagerId,
                     FirstName = manager.FirstName,
@@ -43,7 +44,7 @@ namespace WarehouseWebAPI.Controllers
 
                 };
 
-                managerList.Add(managerView);
+				managerList.Add(managerView);
 
             }
             return managerList;

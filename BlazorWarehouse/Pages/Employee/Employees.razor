@@ -4,54 +4,55 @@
 @inject HttpClient http
 
 <h3>Employees</h3>
-
 <p>
-	<a href="EmployeeCreate">Create New</a>
+    <a href="EmployeeCreate">Create New</a>
 </p>
-@if(EmployeeList == null) 
+@if (EmployeeList == null)
 {
-	<p>Loading...</p>
-} 
-else 
+    <p>Loading...</p>
+}
+else
 {
-	<table class="table">
-		<thead>
-			<tr>
-				<th>First Name</th>
-				<th>Last Name</th>
-				<th>Managers</th>
-			</tr>
-		</thead>
-		<tbody>
-			@foreach (var employee in EmployeeList) 
-			{
-				<tr>
-					<td>@employee.FirstName</td>
-					<td>@employee.LastName</td>
-					<td>@employee.ManagerId</td>
-					<td>
-						<a href="@($"EmployeeEdit/{employee.EmployeeId}")">Edit</a> |
-						<a href="@($"EmployeeDetails/{employee.EmployeeId}")">Details</a>
-						<a onclick="@( () => DeleteEmployee(employee.EmployeeId))" @onclick::preventDefault="true" href="">Delete</a>
-					</td>
-				</tr>			
-			}
-		</tbody>
-	</table>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Manager</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var employee in EmployeeList)
+            {
+                <tr>
+                    <td>@employee.FirstName</td>
+                    <td>@employee.LastName</td>
+                    <td>@employee.Manager?.FullName</td>
+                    <td>
+                        <a href="@($"EmployeeEdit/{employee.EmployeeId}")">Edit</a> |
+                        <a href="@($"EmployeeDetails/{employee.EmployeeId}")">Details</a> |
+                        <a @onclick="@( () => DeleteEmployee(employee.EmployeeId))" @onclick:preventDefault="true" href="">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }
 
+
 @code {
-	public List<EmployeeViewModel>? EmployeeList { get; set; } = new List<EmployeeViewModel>();
+    public List<EmployeeViewModel>? EmployeeList { get; set; } = new List<EmployeeViewModel>();
 
-	private async void DeleteEmployee(int EmployeeId) 
-	{
-		var result = await http.DeleteAsync($"api/managers/{EmployeeId}");
-		EmployeeList = await http.GetFromJsonAsync<List<EmployeeViewModel>>("api/Employees");
-		StateHasChanged();
-	}
+    private async void DeleteEmployee(int EmployeeId)
+    {
+        var result = await http.DeleteAsync($"api/employees/{EmployeeId}");
+        EmployeeList = await http.GetFromJsonAsync<List<EmployeeViewModel>>("api/Employees");
+        StateHasChanged();
+    }
 
-	protected override async Task OnInitializedAsync() 
-	{
-		EmployeeList = await http.GetFromJsonAsync<List<EmployeeViewModel>>("api/Employees");
-	}
+    protected override async Task OnInitializedAsync()
+    {
+        EmployeeList = await http.GetFromJsonAsync<List<EmployeeViewModel>>("api/Employees");
+    }
 }

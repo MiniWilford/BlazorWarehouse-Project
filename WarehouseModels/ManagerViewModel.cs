@@ -13,9 +13,12 @@ namespace WarehouseModels
     {
         public int ManagerId { get; set; }
         [MaxLength(50)]
-        public string FirstName { get; set; }
+        public string? FirstName { get; set; }
         [MaxLength(50)]
-        public string LastName { get; set; }
+        public string? LastName { get; set; }
+
+        public string FullName => LastName + ", " + FirstName;
+
         [MaxLength(50)]
         public string? Title { get; set; }
     }

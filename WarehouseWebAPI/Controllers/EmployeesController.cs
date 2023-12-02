@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WarehouseClassLibraryMVC.Data;
 using WarehouseClassLibraryMVC.Entities;
+using WarehouseModels;
 
 namespace WarehouseWebAPI.Controllers
 {
@@ -31,15 +32,22 @@ namespace WarehouseWebAPI.Controllers
           }
             List<Employee> employeeList = new List<Employee>();
             var employees = await _context.Employees.OrderBy(e => e.LastName).ToListAsync();
+
+            Manager? manager = new(); 
+
             
             foreach(var employee in employees) {
+
+
+                manager = await _context.Managers.FindAsync(employee.ManagerId);
+
                 var employeeView = new Employee 
                 {
                     EmployeeId = employee.EmployeeId,
                     FirstName = employee.FirstName,
                     LastName = employee.LastName,
                     ManagerId = employee.ManagerId,
-                    Manager = employee.Manager
+                    Manager = manager,
                 };
 
                 employeeList.Add(employeeView);
@@ -50,7 +58,7 @@ namespace WarehouseWebAPI.Controllers
 
         // GET: api/Employees/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Employee>> GetEmployee(int id)
+        public async Task<ActionResult<EmployeeViewModel>> GetEmployee(int id)
         {
           if (_context.Employees == null)
           {
@@ -58,12 +66,43 @@ namespace WarehouseWebAPI.Controllers
           }
             var employee = await _context.Employees.FindAsync(id);
 
+
             if (employee == null)
             {
                 return NotFound();
             }
 
-            return employee;
+            Manager? manager = new();
+
+            manager = await _context.Managers.FindAsync(employee.ManagerId);
+
+
+            if (manager == null)
+            {
+                return NotFound();
+            }
+
+            var managerView = new ManagerViewModel
+            {
+
+                ManagerId = manager.ManagerId,
+                FirstName = manager.FirstName,
+                LastName = manager.LastName,
+                Title = manager.Title
+
+            };
+
+            var employeeView = new EmployeeViewModel
+            {
+                EmployeeId = employee.EmployeeId,
+                FirstName = employee.FirstName,
+                LastName = employee.LastName,
+                ManagerId = employee.ManagerId,
+                Manager = managerView,        
+            };
+
+
+            return employeeView;
         }
 
         // PUT: api/Employees/5
