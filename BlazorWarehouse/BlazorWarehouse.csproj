@@ -14,6 +14,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="_Imports.razor~RF30f83808.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
     <_ContentIncludedByDefault Remove="Components\CompanyCard.razor" />
     <_ContentIncludedByDefault Remove="Components\OrderCard.razor" />
     <_ContentIncludedByDefault Remove="Pages\CompanyOrder.razor" />
@@ -24,7 +28,7 @@
     <None Include="Components\CompanyCard.razor" />
     <None Include="Components\OrderCard.razor" />
     <None Include="Pages\CompanyOrder.razor" />
-    <None Include="Pages\Product\Products.razor" />
+    <None Include="Pages\Products.razor" />
   </ItemGroup>
 
   <ItemGroup>
@@ -56,6 +60,11 @@
 
   <ItemGroup>
     <UpToDateCheckInput Remove="Pages\Product\Products.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Pages\Order\" />
+    <Folder Include="Pages\Product\" />
   </ItemGroup>
 
 </Project>
