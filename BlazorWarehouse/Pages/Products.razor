@@ -5,6 +5,9 @@
 @inject HttpClient http
 
 <h3 style="font-weight:bold">Products</h3>
+<p>
+    <a href="ProductCreate">Create New</a>
+</p>
 
 @if (ProductList is null)
 {
@@ -24,8 +27,8 @@ else
                 <th>
                     <h5 style="font-weight:bold">Price</h5>
                 </th>
-                <th style="width:100%">
-                    <!-- Empty Header for details -->
+                <th>
+                    <h5 style="font-weight:bold">Actions</h5>
                 </th>
             </tr>
         </thead>
@@ -43,10 +46,9 @@ else
                         @product.ProductPrice.ToString("$##0.00")
                     </td>
                     <td>
-                        <a href="@($"ProductDetails/{product.ProductId}")">Details</a>
-                    </td>
-                    <td style="width:100%">
-                        <!-- 100% width-->
+                        <a href="@($"ProductEdit/{product.ProductId}")">Edit</a> |
+                        <a href="@($"ProductDetails/{product.ProductId}")">Details</a> |
+                        <a @onclick="@( () => DeleteProduct(product.ProductId))" @onclick:preventDefault="true" href="">Delete</a>
                     </td>
                 </tr>
             }
@@ -57,6 +59,13 @@ else
 @code {
 
     public List<ProductViewModel>? ProductList { get; set; }
+
+    private async void DeleteProduct(int ProductId)
+    {
+        var result = await http.DeleteAsync($"api/products/{ProductId}");
+        ProductList = await http.GetFromJsonAsync<List<ProductViewModel>>("api/Products");
+        StateHasChanged();
+    }
 
     protected override async Task OnInitializedAsync()
     {

@@ -1,0 +1,48 @@
+﻿@page "/ProductCreate"
+@using Microsoft.AspNetCore.Components.Forms
+@using WarehouseModels
+
+@inject HttpClient http
+@inject NavigationManager nav
+
+
+<h3>Create Product</h3>
+
+
+<div class="container">
+    <div class="row">
+        <EditForm Model="@Product" OnSubmit="@HandleSubmit">
+            <div class="form-floating my-2">
+                <InputText id="ProductName" name="ProductName" @bind-Value="Product.ProductName" class="form-control" placeholder="x" required />
+                <label for="ProductName">Product Name:</label>
+            </div>
+            <div class="form-floating my-2">
+                <InputNumber id="ProductPrice" name="ProductPrice" @bind-Value="Product.ProductPrice" class="form-control" placeholder="x" required />
+                <label for="ProductPrice">Product Price:</label>
+            </div>
+            <div class="form-floating my-2">
+                <button class="btn btn-primary" type="submit">Create</button>
+            </div>
+        </EditForm>
+    </div>
+    <div class="row">
+        <div class="my-1">
+            <a href="Products">Back to List</a>
+        </div>
+    </div>
+</div>
+
+@code {
+
+
+    public ProductViewModel Product { get; set; } = new ProductViewModel();
+
+    protected async void HandleSubmit()
+    {
+        var result = await http.PostAsJsonAsync<ProductViewModel>($"api/Products", Product!);
+
+        //redirect to managers list on submit
+        nav.NavigateTo("/Products");
+    }
+}
+

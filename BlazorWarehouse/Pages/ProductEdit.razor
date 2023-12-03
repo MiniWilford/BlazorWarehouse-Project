@@ -1,0 +1,64 @@
+﻿@page "/ProductEdit/{ProductId:int?}"
+@using WarehouseModels
+@using Microsoft.AspNetCore.Components.Forms
+
+@inject HttpClient http
+@inject NavigationManager nav
+
+
+
+<h3>ProductEdit</h3>
+
+@if (Product is null)
+{
+    <p>Loading Product...</p>
+}
+else
+{
+    <div class="container">
+        <div class="row">
+            <EditForm Model="@Product" OnSubmit="@HandleSubmit">
+                <div class="form-floating my-2">
+                    <InputText id="ProductName" name="ProductName" @bind-Value="Product.ProductName" class="form-control" placeholder="x" required />
+                    <label for="ProductName">Product Name:</label>
+                </div>
+                <div class="form-floating my-2">
+                    <InputNumber id="ProductPrice" name="ProductPrice" @bind-Value="Product.ProductPrice" class="form-control" placeholder="x" required />
+                    <label for="ProductPrice">Product Price:</label>
+                </div>
+                <div class="form-floating my-2">
+                    <button class="btn btn-primary" type="submit">Edit</button>
+                </div>
+            </EditForm>
+        </div>
+        <div class="row">
+            <div class="my-1">
+                <a href="Products">Back to List</a>
+            </div>
+
+        </div>
+
+    </div>
+}
+
+@code {
+    [Parameter]
+    public int? ProductId { get; set; }
+
+    public ProductViewModel? Product { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Product = await http.GetFromJsonAsync<ProductViewModel>($"api/Products/{ProductId}");
+
+        await base.OnInitializedAsync();
+    }
+
+    protected async void HandleSubmit()
+    {
+        var result = await http.PutAsJsonAsync<ProductViewModel>($"api/Products/{ProductId}", Product!);
+
+        //redirect to managers list on submit
+        nav.NavigateTo("/Products");
+    }
+}
