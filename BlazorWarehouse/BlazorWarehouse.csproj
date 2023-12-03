@@ -9,7 +9,6 @@
   <ItemGroup>
     <Content Remove="Components\CompanyCard.razor" />
     <Content Remove="Components\OrderCard.razor" />
-    <Content Remove="Pages\CompanyOrder.razor" />
     <Content Remove="Pages\Product\Products.razor" />
   </ItemGroup>
 
@@ -20,14 +19,12 @@
   <ItemGroup>
     <_ContentIncludedByDefault Remove="Components\CompanyCard.razor" />
     <_ContentIncludedByDefault Remove="Components\OrderCard.razor" />
-    <_ContentIncludedByDefault Remove="Pages\CompanyOrder.razor" />
     <_ContentIncludedByDefault Remove="Pages\Product\Products.razor" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="Components\CompanyCard.razor" />
     <None Include="Components\OrderCard.razor" />
-    <None Include="Pages\CompanyOrder.razor" />
     <None Include="Pages\Products.razor" />
   </ItemGroup>
 
@@ -40,10 +37,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.11" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <UpToDateCheckInput Remove="Pages\CompanyOrder.razor" />
   </ItemGroup>
 
   <ItemGroup>
