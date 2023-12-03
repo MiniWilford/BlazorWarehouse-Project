@@ -7,8 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Components\CompanyCard.razor" />
-    <Content Remove="Components\OrderCard.razor" />
     <Content Remove="Pages\Product\Products.razor" />
   </ItemGroup>
 
@@ -17,14 +15,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <_ContentIncludedByDefault Remove="Components\CompanyCard.razor" />
-    <_ContentIncludedByDefault Remove="Components\OrderCard.razor" />
     <_ContentIncludedByDefault Remove="Pages\Product\Products.razor" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Components\CompanyCard.razor" />
-    <None Include="Components\OrderCard.razor" />
     <None Include="Pages\Products.razor" />
   </ItemGroup>
 
@@ -41,14 +35,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WarehouseModels\WarehouseModels.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <UpToDateCheckInput Remove="Components\CompanyCard.razor" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <UpToDateCheckInput Remove="Components\OrderCard.razor" />
   </ItemGroup>
 
   <ItemGroup>
