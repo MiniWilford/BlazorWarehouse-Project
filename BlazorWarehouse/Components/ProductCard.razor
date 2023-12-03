@@ -1,10 +1,8 @@
 ﻿@inject IJSRuntime js
 
-@*
-
-<div class="card"
-	 style="background-color:@(BackgroundColor ?? "White");color:@(TextColor ?? "Black"); display:inline-block; width: @(Width ?? "200px");"
-	 @onclick="@( () => AddProductToCart(Product.ProductId))">
+<div class="card" 
+	style="background-color:@(BackgroundColor ?? "White");color:@(TextColor ?? "Black"); display:inline-block; width: @(Width ?? "200px");"
+	@onclick="@( () => AddProductToCart(Product.ProductId))">
 
 	<div class="card-body">
 
@@ -19,12 +17,7 @@
 	</div>
 </div>
 
-*@
-
 @code {
-
-	@*
-
 	[Parameter]
 	public ProductViewModel Product { get; set; }
 
@@ -39,8 +32,6 @@
 
 	protected async void AddProductToCart(int ProductId)
 	{
-		await js.InvokeVoidAsync("alert", $"The product id of product clicked was: {Product.ProductId}");
+		await js.InvokeVoidAsync("alert", $"The item id of product clicked was: {Product.ProductId}");
 	}
-
-	*@
 }

@@ -2,18 +2,18 @@
 
 @inject HttpClient http
 
-@if(Company is null || Products is null)
+@if (Company is null || Products is null)
 {
 	<p>Retrieving Information...</p>
 }
 else
 {
-	<CompanyCard Company="@Company" BackgroundColor="Blue"/>
-	
+	<CompanyCard Company="@Company" BackgroundColor="Blue" />
+
 	<div class="container-fluid">
-		@foreach(var product in Products)
+		@foreach (var product in Products)
 		{
-			<OrderCard Product="product" Width="180px" BackgroundColor="Beige"/>
+			<ProductCard Product="product" Width="180px" BackgroundColor="Beige" />
 		}
 	</div>
 }
@@ -25,12 +25,12 @@ else
 
 	public CompanyViewModel? Company { get; set; }
 
-    public List<ProductViewModel>? Products { get; set; }
+	public List<ProductViewModel>? Products { get; set; }
 
 	protected override async Task OnInitializedAsync()
 	{
-		Company = await http.GetFromJsonAsync<CompanyViewModel>($"api/companies/{CompanyId}");
-		Products = await http.GetFromJsonAsync<List<ProductViewModel>>($"api/products");
+		Company = await http.GetFromJsonAsync<CompanyViewModel>($"api/Companies/{CompanyId}");
+		Products = await http.GetFromJsonAsync<List<ProductViewModel>>($"api/Products");
 		await base.OnInitializedAsync();
 	}
 }
