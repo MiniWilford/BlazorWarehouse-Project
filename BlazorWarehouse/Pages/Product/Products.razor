@@ -1,0 +1,64 @@
+﻿@page "/Products"
+
+@inject HttpClient http
+
+<h3 style="font-weight:bold">Products</h3>
+
+@if (ProductList is null)
+{
+    <p>Loading Products</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    <h5 style="font-weight:bold">Id</h5>
+                </th>
+                <th>
+                    <h5 style="font-weight:bold">Name</h5>
+                </th>
+                <th>
+                    <h5 style="font-weight:bold">Price</h5>
+                </th>
+                <th style="width:100%">
+                    <!-- Empty Header for details -->
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in ProductList)
+            {
+                <tr>
+                    <td>
+                        @product.ProductId
+                    </td>
+                    <td style="width:250px; white-space:nowrap">
+                        @product.ProductName
+                    </td>
+                    <td style="text-align: right">
+                        @product.ProductPrice.ToString("$##0.00")
+                    </td>
+                    <td>
+                        <a href="@($"ProductDetails/{product.ProductId}")">Details</a>
+                    </td>
+                    <td style="width:100%">
+                        <!-- 100% width-->
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+
+    public List<ProductViewModel>? ProductList { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        ProductList = await http.GetFromJsonAsync<List<ProductViewModel>>($"/api/Products/");
+        await base.OnInitializedAsync();
+    }
+}

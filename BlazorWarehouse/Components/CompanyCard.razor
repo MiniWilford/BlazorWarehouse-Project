@@ -1,0 +1,25 @@
+﻿<div class="card" style="background-color: @(BackgroundColor ?? "White"); color: @(TextColor ?? "Black")">
+
+	<div class="card-body">
+
+		<h5 class="card-title">
+			@Company.CompanyName
+		</h5>
+
+		<p class="card-text">
+			Address: @Company.Address
+		</p>
+
+	</div>
+</div>
+
+@code {
+	[Parameter]
+	public CompanyViewModel Company { get; set; }
+
+	[Parameter]
+	public string BackgroundColor { get; set; }
+
+	[Parameter]
+	public string TextColor { get; set; }
+}

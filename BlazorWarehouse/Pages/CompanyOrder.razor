@@ -1,7 +1,36 @@
-﻿@page "/CompanyOrder"
+﻿@page "/CompanyOrder/{CompanyId:int?}"
 
-<h3>CompanyOrder</h3>
+@inject HttpClient http
+
+@if(Company is null || Products is null)
+{
+	<p>Retrieving Information...</p>
+}
+else
+{
+	<CompanyCard Company="@Company" BackgroundColor="Blue"/>
+	
+	<div class="container-fluid">
+		@foreach(var product in Products)
+		{
+			<OrderCard Product="product" Width="180px" BackgroundColor="Beige"/>
+		}
+	</div>
+}
+
 
 @code {
+	[Parameter]
+	public int? CompanyId { get; set; }
 
+	public CompanyViewModel? Company { get; set; }
+
+    public List<ProductViewModel>? Products { get; set; }
+
+	protected override async Task OnInitializedAsync()
+	{
+		Company = await http.GetFromJsonAsync<CompanyViewModel>($"api/companies/{CompanyId}");
+		Products = await http.GetFromJsonAsync<List<ProductViewModel>>($"api/products");
+		await base.OnInitializedAsync();
+	}
 }
