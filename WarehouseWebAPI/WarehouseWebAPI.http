@@ -20,3 +20,16 @@ GET {{WarehouseWebAPI_HostAddress}}/api/managers
 GET {{WarehouseWebAPI_HostAddress}}/api/managers
 
 ###
+
+POST {{WarehouseWebAPI_HostAddress}}/api/orders
+Content-Type: application/json
+
+{
+  //Order
+}
+
+###
+
+GET {{WarehouseWebAPI_HostAddress}}/api/orders
+
+###
