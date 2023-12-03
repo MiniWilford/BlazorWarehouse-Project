@@ -1,4 +1,5 @@
 ﻿@page "/Products"
+@using WarehouseModels
 
 @inject HttpClient http
 
@@ -58,7 +59,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        ProductList = await http.GetFromJsonAsync<List<ProductViewModel>>($"/api/Products/");
+        ProductList = await http.GetFromJsonAsync<List<ProductViewModel>>($"/api/products/");
         await base.OnInitializedAsync();
     }
 }

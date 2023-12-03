@@ -25,10 +25,10 @@ namespace WarehouseClassLibraryMVC.Data
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Product>().HasData(
 
-                new Product { ProductId = 1, ProductName = "Cheese Pizza", ProductPrice = 9.99f },
-                new Product { ProductId = 2, ProductName = "Pepperoni Pizza", ProductPrice = 12.99f },
-                new Product { ProductId = 3, ProductName = "Bread Sticks", ProductPrice = 4.99f },
-                new Product { ProductId = 4, ProductName = "Salad", ProductPrice = 2.99f }
+                new Product { ProductId = 1, ProductName = "Frozen Pizza", ProductPrice = 4.99f },
+                new Product { ProductId = 2, ProductName = "Hammer and Nails", ProductPrice = 9.99f },
+                new Product { ProductId = 3, ProductName = "Forklift", ProductPrice = 3999.99f },
+                new Product { ProductId = 4, ProductName = "Microwave", ProductPrice = 299.99f }
                 );
 
             modelBuilder.Entity<Manager>().HasData(
