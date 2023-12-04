@@ -8,7 +8,13 @@ POST {{WarehouseWebAPI_HostAddress}}/api/companies
 Content-Type: application/json
 
 {
-  //Company
+
+  "companyName": "Tools R' Us",
+    "address": "5555 Main St",
+    "city": "Detroit",
+    "state": "Michigan",
+    "postalCode": "55443",
+    "orders": []
 }
 
 ###
@@ -25,7 +31,9 @@ POST {{WarehouseWebAPI_HostAddress}}/api/orders
 Content-Type: application/json
 
 {
-  //Order
+  "OrderDate": "2023-08-20T00:00:00",
+    "CompanyId": "1",
+    "OrderItems": []
 }
 
 ###
