@@ -22,7 +22,5 @@ namespace WarehouseClassLibraryMVC.Entities
         [DisplayName("Zip Code")]
         public string? PostalCode { get; set; }
 
-        //Navigational Property
-        public virtual ICollection<Order> Orders { get; set; } = new List<Order>(); // Virtual helps performance, Order Foreign Key
     }
 }

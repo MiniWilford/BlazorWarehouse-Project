@@ -52,7 +52,7 @@ else
                             <span style="">@orderItem.Product.ProductName</span>
                         </div>
                         <div class="col-2">
-                            <span style="">@orderItem.Price</span>
+                            <span style="">@orderItem.Price.ToString("$##0.00")</span>
                         </div>
                     </div>
                 }
@@ -65,7 +65,7 @@ else
                         <span style="font-weight: bold; text-decoration: underline;"></span>
                     </div>
                     <div class="col-2">
-                        <span style="font-weight: bold; text-decoration: underline;">@totalPrice</span>
+                        <span style="font-weight: bold; text-decoration: underline;">@totalPrice.ToString("$##0.00")</span>
                     </div>
                 </div>
 
@@ -73,9 +73,12 @@ else
         </div>
     </div>
     <div class="w-100 pt-2">
-        <div class="btn w-50 btn-primary d-flex justify-content-center" style="margin-left: auto">
-            Review Order
-        </div>
+        @if (order is not null) {
+            <a class="btn w-50 btn-primary d-flex justify-content-center" style="margin-left: auto" href="@($"OrderDetails/{orderId}")">
+                Review Order
+            </a>
+        }
+
     </div>
 
     

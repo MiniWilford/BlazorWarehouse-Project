@@ -32,11 +32,18 @@ namespace WarehouseWebAPI.Controllers
             List<Order> orderList = new List<Order>();
             var orders = await _context.Orders.OrderBy(o => o.OrderDate).ToListAsync();
 
+            Company? company = new();
+
             foreach(var order in orders) {
+
+                company = await _context.Companies.FindAsync(order.CompanyId);
+
                 var orderView = new Order {
                     OrderId = order.OrderId,
                     OrderDate = order.OrderDate,
-                    OrderItems = order.OrderItems
+                    OrderItems = order.OrderItems,
+                    CompanyId = order.CompanyId,
+                    Company = company,
                 };
 
                 orderList.Add(orderView);
@@ -60,7 +67,20 @@ namespace WarehouseWebAPI.Controllers
                 return NotFound();
             }
 
-            return order;
+            Company? company = new();
+
+            company = await _context.Companies.FindAsync(order.CompanyId);
+
+            var orderView = new Order
+            {
+                OrderId = order.OrderId,
+                OrderDate = order.OrderDate,
+                OrderItems = order.OrderItems,
+                CompanyId = order.CompanyId,
+                Company = company,
+            };
+
+            return orderView;
         }
 
         // PUT: api/Orders/5

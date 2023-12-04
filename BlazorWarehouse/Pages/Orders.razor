@@ -15,18 +15,17 @@ else
 		<thead>
 			<tr>
 				<th>Order Date</th>
-				<th>Company ID</th>
+				<th>Company</th>
+				<th>Details</th>
 			</tr>
 		</thead>
 		<tbody>
 			@foreach(var order in OrderList) {
 				<tr>
 					<td>@order.OrderDate</td>
-					<td>@order.CompanyId</td>
+					<td>@order.Company?.CompanyName</td>
 					<td>
-						<a href="@($"OrderEdit/{order.OrderId}")">Edit</a>
 						<a href="@($"OrderDetails/{order.OrderId}")">Details</a>
-						<a @onclick="@( () => DeleteOrder(order.OrderId))" @onclick:preventDefault="true" href="">Delete</a>
 					</td>
 				</tr>
 			}

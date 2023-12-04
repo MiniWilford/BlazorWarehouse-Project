@@ -1,0 +1,97 @@
+﻿@page "/OrderDetails/{OrderId:int?}"
+@using WarehouseModels
+
+@inject HttpClient http
+
+
+
+@if (Order is null)
+{
+    <p>Loading...</p>
+}
+else
+{
+
+    <h3>Order Details</h3>
+
+    <div class="ms-2">
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                Company Name: 
+            </dt>
+            <dd class="col-sm-10">
+                @Order.Company?.CompanyName
+            </dd>
+            <dt class="col-sm-2">
+                Ticket #:
+            </dt>
+            <dd class="col-sm-10">
+                @Order.OrderId
+            </dd>
+            <dt class="col-sm-2">
+                Order Items:
+            </dt>
+            <dd class="col-sm-10">
+
+                <div class="row">
+                    <div class="col-1">
+                        <span style="font-weight: bold; text-decoration: underline;">Qty</span>
+                    </div>
+                    <div class="col-4">
+                        <span style="font-weight: bold; text-decoration: underline;">Item</span>
+                    </div>
+                    <div class="col-1">
+                        <span style="font-weight: bold; text-decoration: underline;">Price</span>
+                    </div>
+                </div>
+
+                @foreach (var orderItem in OrderItems)
+                {
+                    <div class="row">
+                        <div class="col-1">
+                            <span style="">@orderItem.Quantity</span>
+                        </div>
+                        <div class="col-4">
+                            <span style="">@orderItem.Product.ProductName</span>
+                        </div>
+                        <div class="col-1">
+                            <span style="">@orderItem.Price.ToString("$##0.00")</span>
+                        </div>
+                    </div>
+                }
+            </dd>
+        </dl>
+    </div>
+    <div class="ms-2">
+        <a href="Orders">Back to List</a>
+    </div>
+
+}
+
+@code {
+
+    [Parameter]
+    public int? OrderId { get; set; }
+
+    public OrderViewModel? Order { get; set; }
+
+    public List<OrderItemViewModel>? OrderItems { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            Order = await http.GetFromJsonAsync<OrderViewModel>($"api/Orders/{OrderId}");
+            OrderItems = await http.GetFromJsonAsync<List<OrderItemViewModel>>($"api/OrderItems/{OrderId}");
+        }
+        catch (Exception)
+        {
+
+        }
+
+        await base.OnInitializedAsync();
+    }
+
+}
+
