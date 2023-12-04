@@ -1,6 +1,7 @@
 ﻿@page "/CompanyOrder/{CompanyId:int?}"
 
 @inject HttpClient http
+@inject IJSRuntime js
 
 @if (Company is null || Products is null)
 {
@@ -8,29 +9,158 @@
 }
 else
 {
-	<CompanyCard Company="@Company" BackgroundColor="Brown" />
+    <div class="d-flex w-100">
+        <div class="w-50 p-2">
+        	<CompanyCard Company="@Company" BackgroundColor="Brown" />
 
-	<div class="container-fluid">
-		@foreach (var product in Products)
-		{
-			<ProductCard Product="product" Width="180px" BackgroundColor="Orange" />
-		}
-	</div>
+	        <div class="container-fluid">
+                <h2 class="pt-4">Products: </h2>
+		        @foreach (var product in Products)
+		        {
+                    <ProductCard Product="product" Width="180px" BackgroundColor="Orange" OnCardClick="AddProductToCart"/>
+		        }
+	        </div>
+        </div>
+
+
+        <div class="w-50 p-2" style="border:solid 3px black">
+            <h1>Order</h1>
+            <span class="m-1" style="font-weight:bold;">Date: @(order?.OrderDate ?? DateTime.Now)</span>
+            <span class="m-1" style="font-weight:bold;">Ticket #: @(orderId)</span>
+
+            <div class="container">
+
+                <div class="row">
+                    <div class="col-2">
+                         <span style="font-weight: bold; text-decoration: underline;">Qty</span>
+                    </div>
+                    <div class="col-8">
+                        <span style="font-weight: bold; text-decoration: underline;">Item</span>
+                    </div>
+                    <div class="col-2">
+                        <span style="font-weight: bold; text-decoration: underline;">Price</span>
+                    </div>
+                </div>
+
+                @foreach (var orderItem in orderItems)
+                {
+                    <div class="row">
+                        <div class="col-2">
+                            <span style="">@orderItem.Quantity</span>
+                        </div>
+                        <div class="col-8">
+                            <span style="">@orderItem.Product.ProductName</span>
+                        </div>
+                        <div class="col-2">
+                            <span style="">@orderItem.Price</span>
+                        </div>
+                    </div>
+                }
+
+                <div class="row">
+                    <div class="col-2">
+                        <span style="font-weight: bold; text-decoration: underline;"></span>
+                    </div>
+                    <div class="col-8">
+                        <span style="font-weight: bold; text-decoration: underline;"></span>
+                    </div>
+                    <div class="col-2">
+                        <span style="font-weight: bold; text-decoration: underline;">@totalPrice</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="w-100 pt-2">
+        <div class="btn w-50 btn-primary d-flex justify-content-center" style="margin-left: auto">
+            Review Order
+        </div>
+    </div>
+
+    
 }
 
 
 @code {
-	[Parameter]
-	public int? CompanyId { get; set; }
+    [Parameter]
+    public int? CompanyId { get; set; }
 
-	public CompanyViewModel? Company { get; set; }
+    public CompanyViewModel? Company { get; set; }
 
-	public List<ProductViewModel>? Products { get; set; }
+    public List<ProductViewModel>? Products { get; set; }
 
-	protected override async Task OnInitializedAsync()
-	{
-		Company = await http.GetFromJsonAsync<CompanyViewModel>($"api/Companies/{CompanyId}");
-		Products = await http.GetFromJsonAsync<List<ProductViewModel>>($"api/Products");
+    public List<OrderItemViewModel>? orderItems = new List<OrderItemViewModel>();
+
+    public OrderViewModel? order = null;
+
+    public int OrderIdPlaceholder { get; set; }
+
+    public int companyId { get; set; }
+
+    public int orderId { get; set; }
+
+    public float totalPrice { get; set; }
+
+    public string? product { get; set; }
+
+    protected async void AddProductToCart(int productId, string productName, float productPrice)
+    {
+
+
+        if (order is null)
+        {
+            companyId = Company!.CompanyId;
+
+            order = new OrderViewModel
+                {
+                    CompanyId = companyId,
+                    OrderDate = DateTime.Now,
+
+                };
+
+            var response = await http.PostAsJsonAsync("api/Orders", order);
+
+            if (response.IsSuccessStatusCode)
+            {
+                // Deserialize the response content to get the created order
+                var createdOrder = await response.Content.ReadFromJsonAsync<OrderViewModel>();
+
+                // Extract the ID from the created order
+                if (createdOrder != null)
+                {
+                    orderId = createdOrder.OrderId;
+                }
+            }
+        }
+
+        var orderItem = new OrderItemViewModel
+            {
+                OrderId = orderId,
+                ProductId = productId,
+                Quantity = 1,
+                Price = productPrice,
+            };
+
+        totalPrice += productPrice;
+
+        await http.PostAsJsonAsync("api/OrderItems", orderItem);
+
+        orderItems = await http.GetFromJsonAsync<List<OrderItemViewModel>>($"api/OrderItems/{orderId}");
+
+        product = productName;
+
+        StateHasChanged();
+
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Company = await http.GetFromJsonAsync<CompanyViewModel>($"api/Companies/{CompanyId}");
+        Products = await http.GetFromJsonAsync<List<ProductViewModel>>($"api/Products");
+
+        
+
 		await base.OnInitializedAsync();
 	}
 }
